@@ -105,7 +105,7 @@ de:
   charts_burndown2_hint_velocity: "%{remaining_hours} bis zum Releasende(in Abhängigkeit zur Velocity)"
   charts_burndown2_group_burndown: "Burndown"
   charts_burndown2_hint_remaining: "%{remaining_hours} bis zum Releasende  (%{work_done}% erledigte Arbeit)"
-  charts_burndown2_help: "Burndown (verbleibende Stunden) mit Velocity. Das Diagramm zeigt eine Auswertung für eine bestimmte Version displays, d.h. Daten für den Zeitraum der Versionserstellung bis zum Fertigstellungsdatum ."
+  charts_burndown2_help: "Burndown (verbleibende Stunden) mit Velocity. Das Diagramm zeigt eine Auswertung für eine bestimmte Version, d.h. Daten für den Zeitraum der Versionserstellung (bzw. Beginn-Datum der ersten Aufgabe einer Version) bis zum (geplanten) Fertigstellungsdatum der Version."
 
   charts_saved_conditions_label: "Filter speichern"
   project_module_charts: "Charts"
