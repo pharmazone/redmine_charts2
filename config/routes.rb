@@ -10,6 +10,6 @@ RedmineApp::Application.routes.draw do
     get "/deviation/:project_id" => "charts_deviation#index"
     get "/issue/:project_id" => "charts_issue#index"
     
-    post "/destroy_saved_condition/:controller" => '#destroy_saved_condition'
+    post "/destroy_saved_condition/:controller" => 'charts#destroy_saved_condition'
   end
 end

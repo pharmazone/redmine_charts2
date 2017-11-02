@@ -14,7 +14,7 @@ module RedmineCharts
     end
 
     def self.add_chart_done_ratio(project_id, issue_id, status_id, done_ratio, date)
-        row = ChartDoneRatio.first(:conditions => {:issue_id => issue_id, :day => 0, :week => 0, :month => 0})
+        row = ChartDoneRatio.where( {:issue_id => issue_id, :day => 0, :week => 0, :month => 0} ).first
 
         done_ratio = IssueStatus.find(status_id).is_closed? ? 100 : done_ratio
 
@@ -31,7 +31,7 @@ module RedmineCharts
         week = RedmineCharts::RangeUtils.format_week(date)
         month = RedmineCharts::RangeUtils.format_month(date)
 
-        row = ChartDoneRatio.first(:conditions => {:issue_id => issue_id, :day => day, :week => week, :month => month})
+        row = ChartDoneRatio.where({:issue_id => issue_id, :day => day, :week => week, :month => month}).first
 
         if row
           if row.done_ratio != done_ratio
@@ -48,7 +48,7 @@ module RedmineCharts
         week = RedmineCharts::RangeUtils.format_week(date)
         month = RedmineCharts::RangeUtils.format_month(date)
 
-        row = ChartIssueStatus.first(:conditions => {:issue_id => issue_id, :day => day, :week => week, :month => month})
+        row = ChartIssueStatus.where({:issue_id => issue_id, :day => day, :week => week, :month => month}).first
 
         if row
           if row.status_id != status_id

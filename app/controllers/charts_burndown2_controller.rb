@@ -8,7 +8,7 @@ class ChartsBurndown2Controller < ChartsController
     @conditions[:fixed_version_ids] ||= get_current_fixed_version_in(@project)
 
     version = unless @conditions[:fixed_version_ids].empty?
-      Version.first(:conditions => {:id => @conditions[:fixed_version_ids][0]})
+      Version.where({:id => @conditions[:fixed_version_ids][0]}).first
     end
 
     unless version
@@ -66,14 +66,14 @@ class ChartsBurndown2Controller < ChartsController
       conditions[column_name] = v if v and column_name
     end
 
-    issues = Issue.all(:conditions => conditions)
+    issues = Issue.where(conditions).all
 
     # remove parent issues
     issues_children = []
     issues.each do |issue|
       issues_children << issue.parent_id if RedmineCharts.has_sub_issues_functionality_active and issue.parent_id
     end
-    issues.delete_if {|issue| issues_children.include?(issue.id)}
+    issues.to_a.delete_if {|issue| issues_children.include?(issue[:id])}
 
     rows, @range = ChartTimeEntry.get_timeline(:issue_id, @conditions, @range)
 
@@ -205,7 +205,7 @@ class ChartsBurndown2Controller < ChartsController
   private
 
   def get_current_fixed_version_in(project)
-    version = Version.all(:conditions => {:project_id => project.id}).detect do |version|
+    version = Version.where({:project_id => project.id}).all().detect do |version|
       version.created_on.to_date <= Date.current && !version.effective_date.nil? && version.effective_date >= Date.current
     end
     if version

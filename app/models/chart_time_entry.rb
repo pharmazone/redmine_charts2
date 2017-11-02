@@ -41,7 +41,7 @@ class ChartTimeEntry < ActiveRecord::Base
     grouping = "#{range[:column]}"
     grouping << ", #{group}" if group
 
-    rows = all(:joins => joins, :select => select, :conditions => conditions, :readonly => true, :group => grouping, :order => "1 asc, 6 asc")
+    rows = joins(joins).select(select).where(conditions).group(grouping).readonly(true).order("1 asc, 6 asc").all()
 
     rows.each do |row|
       row.group_id = '0' unless row.group_id
@@ -69,7 +69,7 @@ class ChartTimeEntry < ActiveRecord::Base
     joins = "left join issues on issues.id = issue_id"
     select = "sum(logged_hours) as logged_hours, chart_time_entries.issue_id as issue_id"
 
-    rows = all(:joins => joins, :select => select, :conditions => conditions, :readonly => true, :group => group, :order => "1 desc, 2 asc")
+    rows = joins(joins).select(select).where(conditions).group(group).readonly(true).order("1 desc, 2 asc").all()
 
     issues = {}
 

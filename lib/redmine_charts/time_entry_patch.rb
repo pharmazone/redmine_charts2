@@ -20,7 +20,7 @@ module RedmineCharts
       week = RedmineCharts::RangeUtils.format_week(date)
       month = RedmineCharts::RangeUtils.format_month(date)
 
-      row = ChartTimeEntry.first(:conditions => {:issue_id => issue_id, :project_id => project_id, :activity_id => activity_id, :user_id => user_id, :day => day, :week => week, :month => month})
+      row = ChartTimeEntry.where( {:issue_id => issue_id, :project_id => project_id, :activity_id => activity_id, :user_id => user_id, :day => day, :week => week, :month => month} ).first
 
       if row
         row.logged_hours += hours
@@ -30,7 +30,7 @@ module RedmineCharts
         ChartTimeEntry.create(:issue_id => issue_id, :project_id => project_id, :activity_id => activity_id, :user_id => user_id, :day => day, :week => week, :month => month, :logged_hours => hours, :entries => 1)
       end
 
-      row = ChartTimeEntry.first(:conditions => {:issue_id => issue_id, :project_id => project_id, :activity_id => activity_id, :user_id => user_id, :day => 0, :week => 0, :month => 0})
+      row = ChartTimeEntry.where({:issue_id => issue_id, :project_id => project_id, :activity_id => activity_id, :user_id => user_id, :day => 0, :week => 0, :month => 0}).first()
 
       if row
         row.logged_hours += hours
@@ -47,7 +47,7 @@ module RedmineCharts
         week = RedmineCharts::RangeUtils.format_week(date)
         month = RedmineCharts::RangeUtils.format_month(date)
 
-        row = ChartTimeEntry.first(:conditions => {:issue_id => issue_id, :project_id => project_id, :activity_id => activity_id, :user_id => user_id, :day => day, :week => week, :month => month})
+        row = ChartTimeEntry.where({:issue_id => issue_id, :project_id => project_id, :activity_id => activity_id, :user_id => user_id, :day => day, :week => week, :month => month}).first()
 
         if row
           row.logged_hours -= hours
@@ -60,7 +60,7 @@ module RedmineCharts
           end
         end
 
-        row = ChartTimeEntry.first(:conditions => {:issue_id => issue_id, :project_id => project_id, :activity_id => activity_id, :user_id => user_id, :day => 0, :week => 0, :month => 0})
+        row = ChartTimeEntry.where({:issue_id => issue_id, :project_id => project_id, :activity_id => activity_id, :user_id => user_id, :day => 0, :week => 0, :month => 0}).first
 
         if row
           row.logged_hours -= hours
@@ -84,7 +84,7 @@ module RedmineCharts
         week = RedmineCharts::RangeUtils.format_week(self.spent_on)
         month = RedmineCharts::RangeUtils.format_month(self.spent_on)
 
-        row = ChartTimeEntry.first(:conditions => {:issue_id => self.issue_id, :project_id => self.project_id, :activity_id => self.activity_id, :user_id => self.user_id, :day => day, :week => week, :month => month})
+        row = ChartTimeEntry.where({:issue_id => self.issue_id, :project_id => self.project_id, :activity_id => self.activity_id, :user_id => self.user_id, :day => day, :week => week, :month => month}).first
 
         if row
           row.logged_hours -= self.hours

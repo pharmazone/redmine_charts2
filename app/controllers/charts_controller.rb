@@ -76,10 +76,10 @@ class ChartsController < ApplicationController
     end
 
     unless @saved_condition
-      @saved_condition = ChartSavedCondition.first(:conditions => {:id => params[:saved_condition_id]}) if not params[:saved_condition_id].blank?
+      @saved_condition = ChartSavedCondition.where({:id => params[:saved_condition_id]}).first() if not params[:saved_condition_id].blank?
     end
 
-    @saved_conditions = ChartSavedCondition.all(:conditions => ["project_id is null or project_id = ?", @project.id])
+    @saved_conditions = ChartSavedCondition.where(["project_id is null or project_id = ?", @project.id]).all
 
     create_chart
 
@@ -91,7 +91,7 @@ class ChartsController < ApplicationController
   end
 
   def destroy_saved_condition
-    condition = ChartSavedCondition.first(:conditions => {:id => params[:id]})
+    condition = ChartSavedCondition.where({:id => params[:id]}).first()
 
     unless condition
       flash[:error] = l(:charts_saved_condition_flash_not_found)
@@ -259,7 +259,7 @@ class ChartsController < ApplicationController
     if action == :create
       condition = ChartSavedCondition.new
     else
-      condition = ChartSavedCondition.first(:conditions => {:id => params[:saved_condition_id]})
+      condition = ChartSavedCondition.where({:id => params[:saved_condition_id]}).first()
     end
 
     unless condition
